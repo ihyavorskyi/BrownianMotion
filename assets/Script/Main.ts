@@ -18,13 +18,21 @@ export default class Main extends cc.Component {
     @property(cc.Prefab)
     rectangle: cc.Prefab = null;
 
+    @property(cc.Prefab)
+    circleConrol: cc.Prefab = null;
+
 
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
 
+
+
         if (Main.mode == 1) {
             this.generateFigure(this.circle);
+            let figure = cc.instantiate(this.circleConrol);
+            figure.setPosition(400, 400);
+            cc.director.getScene().addChild(figure);
         } else if (Main.mode == 2) {
             this.generateFigure(this.triangle);
         } else if (Main.mode == 3) {
@@ -51,5 +59,9 @@ export default class Main extends cc.Component {
 
             cc.director.getScene().addChild(figure);
         }
+        if (Main.mode == 1)
+            setTimeout(() => {
+                this.generateFigure(figurePrefab);
+            }, 10000);
     }
 }
